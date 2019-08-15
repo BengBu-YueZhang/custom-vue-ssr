@@ -5,6 +5,9 @@ const router = new Router()
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
 
+// 是否为生产环境
+const isProd = process.env.NODE_ENV === 'production'
+
 const app = new Koa()
 // 静态html模版
 const template = fs.readFileSync('./src/index.template.html', 'utf-8')
