@@ -2,6 +2,7 @@ import Vue from 'vue'
 import createStore from './store'
 import createRouter from './router'
 import { sync } from 'vuex-router-sync'
+import App from './App.vue'
 
 export default function createApp () {
   const store = createStore()
