@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"Error: no test specified\" && exit 1",
-    "build": ""
+    "start": "node server.js",
+    "build": "",
+    "build:client": "",
+    "build:server": ""
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
     "axios": "^0.19.0",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
+    "lru-cache": "^5.1.1",
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
     "vue-server-renderer": "^2.6.10",
