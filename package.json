@@ -1,0 +1,19 @@
+{
+  "name": "custom-vue-ssr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BengBu-YueZhang/custom-vue-ssr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BengBu-YueZhang/custom-vue-ssr/issues"
+  },
+  "homepage": "https://github.com/BengBu-YueZhang/custom-vue-ssr#readme"
+}
