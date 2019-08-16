@@ -17,10 +17,6 @@ switch (process.env.NODE_ENV) {
 
 module.exports = {
 
-  mode: isProd ? 'production' : 'development',
-
-  devtool: isProd ? false : '#cheap-module-source-map',
-
   output: {
     path: config.outputPath,
     publicPath: config.publicPath,
