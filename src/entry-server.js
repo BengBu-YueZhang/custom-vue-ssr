@@ -28,6 +28,7 @@ export default context => {
           }).then(resolve).catch(reject)
         })
         p.push(fetchPromise)
+
         let asyncDataPromise = new Promise(resolve => {
           component.$options.asyncData && component.$options.asyncData({
             store,
@@ -38,6 +39,7 @@ export default context => {
           }).catch(reject)
         })
         p.push(asyncDataPromise)
+        
         return Promise.all(p)
       })
 
