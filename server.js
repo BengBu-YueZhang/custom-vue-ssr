@@ -1,6 +1,7 @@
 const fs = require('fs')
 const Koa = require('koa')
 const Router = require('koa-router')
+const serve = require('koa-static')
 const router = new Router()
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
@@ -15,6 +16,7 @@ const templatePath = path.resolve(__dirname, './src/index.template.html')
 
 // vue-server-renderer的实例
 let renderer = null
+let readyPromise = null
 
 const createRenderer = (serverBundle) => {
   return createBundleRenderer(serverBundle, {
@@ -27,15 +29,29 @@ const createRenderer = (serverBundle) => {
   })
 }
 
-const context = {
-  title: 'Vue SSR'
-}
-
 const render = (ctx) => {
-  ctx.res.setHeader('Content-Type', 'text/html')
+  ctx.set('Content-Type', 'text/html')
+
+  const context = {
+    title: 'Vue SSR'
+  }
+
+  const handleError = (err) => {
+    if (err.code === 404) {
+      ctx.response.status = 404
+      ctx.response.body = 'Page Not Found'
+    } else {
+      ctx.response.status = 500
+      ctx.response.body = 'Internal Server Error'
+    }
+  }
+  
   renderer.renderToString(context, (err, html) => {
     if (!err) {
-      res.send(html)
+      ctx.response.status = 200
+      ctx.response.body = html
+    } else {
+      handleError(err)
     }
   })
 }
@@ -60,8 +76,12 @@ if (isProd) {
   )
 }
 
-router.get('*', isProd ? render : (req, res) => {
-  readyPromise.then(() => render(req, res))
+// 静态文件管理
+app.use('/dist', serve(path.resolve(__dirname, './dist')))
+app.use('/public', serve(path.resolve(__dirname, './public')))
+
+router.get('*', isProd ? render : (ctx) => {
+  readyPromise.then(() => render(ctx))
 })
 
 app.use(router.routes(), router.allowedMethods())
