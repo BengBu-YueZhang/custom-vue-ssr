@@ -8,7 +8,7 @@ module.exports = {
     chunkFilename: '[name].chunk.js',
     vars: {
       'process.env': {
-        'ENV': JSON.stringify('development')
+        'NODE_ENV': JSON.stringify('development')
       }
     }
   },
@@ -19,7 +19,7 @@ module.exports = {
     chunkFilename: '[name].[chunkhash].chunk.js',
     vars: {
       'process.env': {
-        'ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production')
       }
     }
   }
