@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import { createApp } from './app'
+import createApp from './main.js'
 
 const { app, router, store } = createApp()
 
@@ -32,7 +31,7 @@ router.onReady(() => {
 
     const promises = activatedComponents.map(component => {
       const p = []
-      let fetchPromise = new Promise(resolve => {
+      let fetchPromise = new Promise((resolve, reject) => {
         if (serverRendered) {
           component.$options.fetch && component.$options.fetch({
             store,
@@ -44,7 +43,7 @@ router.onReady(() => {
       })
       p.push(fetchPromise)
 
-      let asyncDataPromise = new Promise(resolve => {
+      let asyncDataPromise = new Promise((resolve, reject) => {
         if (serverRendered && !component.$options.data) {
           component.$options.asyncData && component.$options.asyncData({
             store,

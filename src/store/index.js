@@ -4,7 +4,7 @@ import user from './moudels/user.moudels'
 
 Vue.use(Vuex)
 
-export function createStore () {
+export default function createStore () {
   return new Vuex.Store({
     modules: {
       user

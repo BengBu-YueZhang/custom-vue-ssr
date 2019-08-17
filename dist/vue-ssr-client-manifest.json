@@ -1,0 +1,60 @@
+{
+  "publicPath": "/dist/",
+  "all": [
+    "50e1173e5e04f311f41c.b5c60905e9486c1d2548.chunk.js",
+    "981aff0f3e791a010c17.2ef6c40e073c91a951cf.chunk.js",
+    "9897cb5f36a8a5e1aa67.d042dc8959f941ee56b6.chunk.js",
+    "main.9a9282254f12a932b7f1.js",
+    "vendors-chunk.640e77a75f8c89772ce9.chunk.js"
+  ],
+  "initial": [
+    "vendors-chunk.640e77a75f8c89772ce9.chunk.js",
+    "main.9a9282254f12a932b7f1.js"
+  ],
+  "async": [
+    "50e1173e5e04f311f41c.b5c60905e9486c1d2548.chunk.js",
+    "981aff0f3e791a010c17.2ef6c40e073c91a951cf.chunk.js",
+    "9897cb5f36a8a5e1aa67.d042dc8959f941ee56b6.chunk.js"
+  ],
+  "modules": {
+    "3e7edb7d": [
+      4
+    ],
+    "f09b3a7c": [
+      4
+    ],
+    "71df8fd2": [
+      0
+    ],
+    "f77ce444": [
+      4
+    ],
+    "2c876dd5": [
+      3
+    ],
+    "44508a4c": [
+      4
+    ],
+    "457be6f0": [
+      4
+    ],
+    "2628e3d7": [
+      1
+    ],
+    "69d03625": [
+      2
+    ],
+    "1dfe3e46": [
+      4
+    ],
+    "10daca36": [
+      4
+    ],
+    "33991df4": [
+      4
+    ],
+    "3c7db8f0": [
+      4
+    ]
+  }
+}

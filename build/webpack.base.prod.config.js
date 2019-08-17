@@ -31,7 +31,7 @@ module.exports = merge(baseConfig, {
       })
     ],
 
-    splitChunks: [
+    splitChunks: {
       cacheGroups: {
         default: false,
         vendors: false,
@@ -51,7 +51,7 @@ module.exports = merge(baseConfig, {
           reuseExistingChunk: true
         }
       }
-    ]
+    }
   },
 
   module: {

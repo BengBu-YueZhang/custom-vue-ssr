@@ -21,7 +21,7 @@ let readyPromise = null
 const createRenderer = (serverBundle) => {
   return createBundleRenderer(serverBundle, {
     // 静态组件缓存
-    cache: LRU({
+    cache: new LRU({
       max: 1000,
       maxAge: 1000 * 60 * 20
     }),
@@ -45,6 +45,7 @@ const render = (req, res) => {
   }
   
   renderer.renderToString(context, (err, html) => {
+    console.log('err', err)
     if (!err) {
       res.send(html)
     } else {
@@ -62,6 +63,7 @@ if (isProd) {
     template,
     clientManifest
   })
+  console.log('renderer1', renderer)
 } else {
   // 开发环境
   readyPromise = require('./build/setup-dev-server')(
@@ -69,6 +71,7 @@ if (isProd) {
     templatePath,
     (bundle, options) => {
       renderer = createRenderer(bundle, options)
+      console.log('renderer2', renderer)
     }
   )
 }
@@ -86,4 +89,4 @@ app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })
 
-app.listen(8080)
+app.listen(7070)
