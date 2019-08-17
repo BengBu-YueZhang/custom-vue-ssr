@@ -1,16 +1,15 @@
 const fs = require('fs')
-const Koa = require('koa')
-const Router = require('koa-router')
-const serve = require('koa-static')
+const express = require('express')
 const path = require('path')
-const router = new Router()
 const LRU = require('lru-cache')
+const compression = require('compression')
 const { createBundleRenderer } = require('vue-server-renderer')
+const resolve = file => path.resolve(__dirname, file)
 
 // 是否为生产环境
 const isProd = process.env.NODE_ENV === 'production'
 
-const app = new Koa()
+const app = express()
 
 // 静态html模版路径
 const templatePath = path.resolve(__dirname, './src/index.template.html')
@@ -30,8 +29,8 @@ const createRenderer = (serverBundle) => {
   })
 }
 
-const render = (ctx) => {
-  ctx.set('Content-Type', 'text/html')
+const render = (req, res) => {
+  res.setHeader('Content-Type', 'text/html')
 
   const context = {
     title: 'Vue SSR'
@@ -39,18 +38,15 @@ const render = (ctx) => {
 
   const handleError = (err) => {
     if (err.code === 404) {
-      ctx.response.status = 404
-      ctx.response.body = 'Page Not Found'
+      res.status(404).send('404 | Page Not Found')
     } else {
-      ctx.response.status = 500
-      ctx.response.body = 'Internal Server Error'
+      res.status(500).send('500 | Internal Server Error')
     }
   }
   
   renderer.renderToString(context, (err, html) => {
     if (!err) {
-      ctx.response.status = 200
-      ctx.response.body = html
+      res.send(html)
     } else {
       handleError(err)
     }
@@ -77,14 +73,17 @@ if (isProd) {
   )
 }
 
-// 静态文件管理
-app.use('/dist', serve(path.resolve(__dirname, './dist')))
-app.use('/public', serve(path.resolve(__dirname, './public')))
-
-router.get('*', isProd ? render : (ctx) => {
-  readyPromise.then(() => render(ctx))
+const serve = (path, cache) => express.static(resolve(path), {
+  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 })
 
-app.use(router.routes(), router.allowedMethods())
+app.use(compression({ threshold: 0 }))
+// 静态文件管理
+app.use('/dist', serve('./dist', true))
+app.use('/public', serve('./public', true))
+
+app.get('*', isProd ? render : (req, res) => {
+  readyPromise.then(() => render(req, res))
+})
 
 app.listen(8080)
