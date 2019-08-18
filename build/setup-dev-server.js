@@ -33,7 +33,6 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   template = fs.readFileSync(templatePath, 'utf-8')
   chokidar.watch(templatePath).on('change', () => {
     template = fs.readFileSync(templatePath, 'utf-8')
-    console.log('index.html template updated.')
     update()
   })
 

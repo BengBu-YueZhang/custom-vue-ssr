@@ -40,9 +40,7 @@ if (isProd) {
     app,
     templatePath,
     (bundle, options) => {
-      console.log(1)
       renderer = createRenderer(bundle, options)
-      console.log(2)
     }
   )
 }
@@ -70,18 +68,29 @@ function render (req, res) {
   }
 
   const context = {
-    title: 'Vue HN 2.0',
-    url: req.url
+    url: req.url,
+    title: ''
   }
 
   renderer.renderToString(context, (err, html) => {
     if (err) {
-      console.log(err)
       return handleError(err)
     }
     res.send(html)
   })
 }
+
+app.get('/api/detail', (req, res) => {
+  return res.send({
+    msg: 'success',
+    data: [
+      'https://img3.doubanio.com/view/photo/l/public/p2502651183.webp',
+      'https://img1.doubanio.com/view/photo/l/public/p2399705738.webp',
+      'https://img3.doubanio.com/view/photo/l/public/p2504091813.webp',
+      'https://img3.doubanio.com/view/photo/l/public/p2504091825.webp'
+    ]
+  })
+})
 
 app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))

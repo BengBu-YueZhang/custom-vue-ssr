@@ -27,13 +27,6 @@ router.onReady(() => {
     const prevMatched = router.getMatchedComponents(from)
 
     let diffed = false
-    // 判断渲染是否来自服务端
-    let serverRendered = false
-
-    if (window.__INITIAL_STATE__ && window.__INITIAL_STATE__.serverRendered === true) {
-      serverRendered = !!window.__INITIAL_STATE__.serverRendered
-      window.__INITIAL_STATE__.serverRendered = false
-    }
 
     const activated = matched.filter((c, i) => {
       return diffed || (diffed = (prevMatched[i] !== c))
@@ -46,12 +39,7 @@ router.onReady(() => {
     }
 
     Promise.all(asyncDataHooks.map(hook => {
-      // 如果来自服务端渲染，不在重复执行asyncData
-      if (!serverRendered) {
-        return hook({ store, route: to })
-      } else {
-        return Promise.resolve()
-      }
+      return hook({ store, route: to })
     })).then(() => {
       next()
     }).catch(next)
