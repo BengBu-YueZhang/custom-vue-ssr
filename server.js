@@ -33,7 +33,8 @@ const render = (req, res) => {
   res.setHeader('Content-Type', 'text/html')
 
   const context = {
-    title: 'Vue SSR'
+    title: 'Vue SSR',
+    url: req.url
   }
 
   const handleError = (err) => {
@@ -71,7 +72,6 @@ if (isProd) {
     templatePath,
     (bundle, options) => {
       renderer = createRenderer(bundle, options)
-      console.log('renderer2', renderer)
     }
   )
 }
@@ -89,4 +89,4 @@ app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })
 
-app.listen(7070)
+app.listen(7071)
