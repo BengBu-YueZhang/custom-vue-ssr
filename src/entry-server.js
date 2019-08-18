@@ -19,32 +19,39 @@ export default context => {
         return reject({ code: 404 })
       }
 
-    
-      // const promises = matchedComponents.map(component => {
-      //   const p = []
-      //   let fetchPromise = new Promise(resolve => {
-      //     component.$options.fetch && component.$options.fetch({
-      //       store,
-      //       route: router.currentRoute
-      //     }).then(resolve).catch(reject)
-      //   })
-      //   p.push(fetchPromise)
+      const promises = matchedComponents.map(component => {
+        const p = []
+        let fetchPromise = new Promise(resolve => {
+          if (component.$options.fetch) {
+            component.$options.fetch({
+              store,
+              route: router.currentRoute
+            }).then(resolve).catch(reject)
+          } else {
+            resolve()
+          }
+        })
+        p.push(fetchPromise)
 
-      //   let asyncDataPromise = new Promise(resolve => {
-      //     component.$options.asyncData && component.$options.asyncData({
-      //       store,
-      //       route: router.currentRoute
-      //     }).then((data) => {
-      //       component.$options.data = Object.assign({}, component.$options.data, data)
-      //       resolve()
-      //     }).catch(reject)
-      //   })
-      //   p.push(asyncDataPromise)
+        let asyncDataPromise = new Promise(resolve => {
+          if (component.$options.asyncData) {
+            component.$options.asyncData({
+              store,
+              route: router.currentRoute
+            }).then((data) => {
+              component.$options.data = Object.assign({}, component.$options.data, data)
+              resolve()
+            }).catch(reject)
+          } else {
+            resolve()
+          }
+        })
+        p.push(asyncDataPromise)
         
-      //   return Promise.all(p)
-      // })
+        return Promise.all(p)
+      })
 
-      Promise.resolve().then(() => {
+      Promise.all(promises).then(() => {
         context.state = {
           serverRendered: true,
           state: store.state
