@@ -7,14 +7,14 @@ export default {
   name: 'HomeView',
 
   asyncData () {
-    return {
-      title: '首页'
-    }
+    return Promise.resolve({
+      title: '我爱你，米莉'
+    })
   },
 
   data () {
     return {
-      title: ''
+      title: '我爱你'
     }
   }
 }

@@ -10,6 +10,13 @@ export default context => {
       return reject({ code: 404 })
     }
 
+    const Components = router.getMatchedComponents(router.match(url))
+    Components[0].data = function data() {
+      return {
+        title: 'fuck'
+      }
+    }
+
     router.push(url)
 
     router.onReady(() => {
@@ -22,8 +29,8 @@ export default context => {
       const promises = matchedComponents.map(component => {
         const p = []
         let fetchPromise = new Promise(resolve => {
-          if (component.$options.fetch) {
-            component.$options.fetch({
+          if (component.fetch) {
+            component.fetch({
               store,
               route: router.currentRoute
             }).then(resolve).catch(reject)
@@ -34,12 +41,20 @@ export default context => {
         p.push(fetchPromise)
 
         let asyncDataPromise = new Promise(resolve => {
-          if (component.$options.asyncData) {
-            component.$options.asyncData({
+          if (component.asyncData) {
+            component.asyncData({
               store,
               route: router.currentRoute
-            }).then((data) => {
-              component.$options.data = Object.assign({}, component.$options.data, data)
+            }).then((result) => {
+              // console.log('app.$options', app.$options.data)
+              // console.log('result>>>>>>', result)
+              console.log(typeof component.data)
+              console.log(component.data.length)
+              console.log(component.data)
+              // console.log(component.data())
+              component.data = function data() {
+                return Object.assign(component.data(), result)
+              }
               resolve()
             }).catch(reject)
           } else {

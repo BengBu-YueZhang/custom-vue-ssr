@@ -46,10 +46,10 @@ const render = (req, res) => {
   }
   
   renderer.renderToString(context, (err, html) => {
-    console.log('err', err)
     if (!err) {
       res.send(html)
     } else {
+      console.log('err>>>>>>>>>>>>', err)
       handleError(err)
     }
   })
@@ -64,7 +64,6 @@ if (isProd) {
     template,
     clientManifest
   })
-  console.log('renderer1', renderer)
 } else {
   // 开发环境
   readyPromise = require('./build/setup-dev-server')(

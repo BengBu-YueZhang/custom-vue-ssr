@@ -7,9 +7,9 @@ export default {
   name: 'LoginView',
 
   asyncData () {
-    return {
+    return Promise.resolve({
       title: '登录页'
-    }
+    })
   },
 
   data () {

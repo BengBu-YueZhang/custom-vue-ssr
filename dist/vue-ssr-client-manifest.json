@@ -1,60 +1,66 @@
 {
   "publicPath": "/dist/",
   "all": [
-    "50e1173e5e04f311f41c.b5c60905e9486c1d2548.chunk.js",
-    "981aff0f3e791a010c17.2ef6c40e073c91a951cf.chunk.js",
-    "9897cb5f36a8a5e1aa67.d042dc8959f941ee56b6.chunk.js",
-    "main.9a9282254f12a932b7f1.js",
+    "./static/img/MillieBobbyBrown2.22a0992.jpg",
+    "50e1173e5e04f311f41c.03b292d1b4e9b73f186f.chunk.js",
+    "981aff0f3e791a010c17.f1044856f108e988d088.chunk.js",
+    "9897cb5f36a8a5e1aa67.e09518b7fc9efac18de0.chunk.js",
+    "main.e673e3c98c9042774fcd.js",
     "vendors-chunk.640e77a75f8c89772ce9.chunk.js"
   ],
   "initial": [
     "vendors-chunk.640e77a75f8c89772ce9.chunk.js",
-    "main.9a9282254f12a932b7f1.js"
+    "main.e673e3c98c9042774fcd.js"
   ],
   "async": [
-    "50e1173e5e04f311f41c.b5c60905e9486c1d2548.chunk.js",
-    "981aff0f3e791a010c17.2ef6c40e073c91a951cf.chunk.js",
-    "9897cb5f36a8a5e1aa67.d042dc8959f941ee56b6.chunk.js"
+    "50e1173e5e04f311f41c.03b292d1b4e9b73f186f.chunk.js",
+    "981aff0f3e791a010c17.f1044856f108e988d088.chunk.js",
+    "9897cb5f36a8a5e1aa67.e09518b7fc9efac18de0.chunk.js"
   ],
   "modules": {
     "3e7edb7d": [
-      4
+      5
     ],
     "f09b3a7c": [
-      4
+      5
     ],
-    "71df8fd2": [
+    "7210b460": [
+      4,
       0
     ],
-    "f77ce444": [
-      4
-    ],
-    "2c876dd5": [
-      3
-    ],
-    "44508a4c": [
-      4
-    ],
-    "457be6f0": [
-      4
-    ],
-    "2628e3d7": [
+    "71df8fd2": [
       1
     ],
-    "69d03625": [
+    "f77ce444": [
+      5
+    ],
+    "2c876dd5": [
+      4,
+      0
+    ],
+    "44508a4c": [
+      5
+    ],
+    "457be6f0": [
+      5
+    ],
+    "2628e3d7": [
       2
     ],
+    "69d03625": [
+      3
+    ],
     "1dfe3e46": [
-      4
+      5
     ],
     "10daca36": [
-      4
+      5
     ],
     "33991df4": [
-      4
+      5
     ],
     "3c7db8f0": [
-      4
+      5
     ]
   }
 }

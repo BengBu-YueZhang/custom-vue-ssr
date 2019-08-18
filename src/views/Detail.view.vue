@@ -7,9 +7,9 @@ export default {
   name: 'DetailView',
 
   asyncData () {
-    return {
+    return Promise.resolve({
       title: '详情页'
-    }
+    })
   },
 
   data () {
