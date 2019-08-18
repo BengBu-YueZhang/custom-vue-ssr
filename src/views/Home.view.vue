@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <div class="home-images">
-      <img class="home-images-cover1" src="/public/MillieBobbyBrown1.jpg"/>
-      <img class="home-images-cover2" src="https://img1.doubanio.com/view/photo/l/public/p2389297197.webp"/>
-      <img class="home-images-cover3" src="https://img3.doubanio.com/view/photo/l/public/p2392934273.webp"/>
+      <img class="home-images-cover1" src="MillieBobbyBrown1.jpg"/>
+      <img class="home-images-cover2" src="MillieBobbyBrown2.jpg"/>
+      <img class="home-images-cover3" src="MillieBobbyBrown3.jpg"/>
     </div>
     <router-link class="home-link" to="/detail">MORE</router-link>
   </div>

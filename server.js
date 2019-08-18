@@ -1,14 +1,17 @@
 const fs = require('fs')
 const path = require('path')
 const LRU = require('lru-cache')
-const express = require('express')
-const compression = require('compression')
+const compress = require('koa-compress')
+const Koa = require('koa')
+const Router = require('koa-router')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
+const koaStatic = require('koa-static')
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const app = express()
+const app = new Koa()
+const router = new Router()
 
 function createRenderer (bundle, options) {
   try {
@@ -45,57 +48,66 @@ if (isProd) {
   )
 }
 
-const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
-})
+const serve = (path, cache) => koaStatic(resolve(path), {
+    maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
+  }
+)
 
-app.use(compression({ threshold: 0 }))
-app.use('/dist', serve('./dist', true))
-app.use('/public', serve('./public', true))
+app.use(compress())
+app.use(serve('./dist', true))
+app.use(serve('./public', true))
 
-function render (req, res) {
+async function render (ctx) {
+  if (ctx.url.indexOf('api') > -1) return
 
-  res.setHeader("Content-Type", "text/html")
+  ctx.set("Content-Type", "text/html")
 
   const handleError = err => {
     if (err.url) {
-      res.redirect(err.url)
+      ctx.redirect(err.url)
     } else if(err.code === 404) {
-      res.status(404).send('404 | Page Not Found')
+      ctx.response.status = 404
+      ctx.response.body = '404 | Page Not Found'
     } else {
-      res.status(500).send('500 | Internal Server Error')
+      ctx.response.status = 500
+      ctx.response.body = '500 | Internal Server Error'
     }
   }
 
   const context = {
-    url: req.url,
+    url: ctx.url,
     title: ''
   }
 
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      return handleError(err)
-    }
-    res.send(html)
+  await renderer.renderToString(context).then(html => {
+    ctx.body = html
+  }).catch(err => {
+    handleError(err)
   })
 }
 
-app.get('/api/detail', (req, res) => {
-  return res.send({
+router.get('/api/detail', async (ctx) => {
+  ctx.type = 'json'
+  ctx.status = 200
+  ctx.body = {
     msg: 'success',
     data: [
-      'https://img3.doubanio.com/view/photo/l/public/p2502651183.webp',
-      'https://img1.doubanio.com/view/photo/l/public/p2399705738.webp',
-      'https://img3.doubanio.com/view/photo/l/public/p2504091813.webp',
-      'https://img3.doubanio.com/view/photo/l/public/p2504091825.webp'
+      'https://i.loli.net/2019/08/18/oQwqrHnGOJbNKLC.png',
+      'https://i.loli.net/2019/08/18/DeI7hV5Mp6rcbK4.png',
+      'https://i.loli.net/2019/08/18/YTuSmfAlytIqgwd.png',
+      'https://i.loli.net/2019/08/18/sQvkjf6TI2mUOp1.png'
     ]
-  })
+  }
 })
 
-app.get('*', isProd ? render : (req, res) => {
-  readyPromise.then(() => render(req, res))
+router.get('*', isProd ? render : (ctx) => {
+  readyPromise.then(() => render(ctx))
 })
+
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 const port = process.env.PORT || 8080
 
 app.listen(port)
+
