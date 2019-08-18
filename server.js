@@ -2,9 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const LRU = require('lru-cache')
 const express = require('express')
-const favicon = require('serve-favicon')
 const compression = require('compression')
-const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
 
@@ -13,13 +11,17 @@ const isProd = process.env.NODE_ENV === 'production'
 const app = express()
 
 function createRenderer (bundle, options) {
-  return createBundleRenderer(bundle, Object.assign(options, {
-    cache: LRU({
-      max: 1000,
-      maxAge: 1000 * 60 * 15
-    }),
-    runInNewContext: false
-  }))
+  try {
+    return createBundleRenderer(bundle, Object.assign(options, {
+      cache: new LRU({
+        max: 1000,
+        maxAge: 1000 * 60 * 15
+      }),
+      runInNewContext: false
+    }))
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 let renderer
@@ -38,7 +40,9 @@ if (isProd) {
     app,
     templatePath,
     (bundle, options) => {
+      console.log(1)
       renderer = createRenderer(bundle, options)
+      console.log(2)
     }
   )
 }
@@ -72,6 +76,7 @@ function render (req, res) {
 
   renderer.renderToString(context, (err, html) => {
     if (err) {
+      console.log(err)
       return handleError(err)
     }
     res.send(html)
