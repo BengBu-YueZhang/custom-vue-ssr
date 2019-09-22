@@ -34,17 +34,7 @@ export default {
     margin-bottom: 60px;
 
     &-cover1 {
-      width: 400px;
-      margin: 15px;
-    }
-
-    &-cover2 {
-      width: 320px;
-      margin: 15px;
-    }
-
-    &-cover3 {
-      width: 350px;
+      width: 600px;
       margin: 15px;
     }
   }

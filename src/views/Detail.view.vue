@@ -18,7 +18,7 @@ export default {
 
 <style lang="less" scoped>
 .detail {
-  padding: 60px 400px;
+  padding: 60px 460px;
   width: 100%;
   box-sizing: border-box;
 
