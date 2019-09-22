@@ -10,9 +10,7 @@
 ```shell
 
 # 本地开发
-# 1. 构建ServerBundle以及ClientBundle
-npm run build:dev
-# 2. 本地开发
+# 1. 本地开发
 npm run dev
 
 # 生产环境使用
@@ -20,7 +18,7 @@ npm run dev
 npm run build:prod
 # 2. 本地预览
 npm run start
-# 3. 线上启动
+# 3. 线上启动(您可以考虑使用pm2)
 npm run line
 ```
 

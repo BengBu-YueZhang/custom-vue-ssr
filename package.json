@@ -5,13 +5,13 @@
   "main": ".eslintrc.js",
   "scripts": {
     "dev": "export PORT=7070 NODE_ENV=development && node server.js",
-    "start": "export PORT=7070 NODE_ENV=production && node server.js",
     "build:dev": "rimraf dist && npm run build:client:dev && npm run build:server:dev",
     "build:client:dev": "export NODE_ENV=development && webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server:dev": "export NODE_ENV=development && webpack --config build/webpack.server.config.js --progress --hide-modules",
     "build:prod": "rimraf dist && npm run build:client:prod && npm run build:server:prod",
     "build:client:prod": "export NODE_ENV=production && webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server:prod": "export NODE_ENV=production && webpack --config build/webpack.server.config.js --progress --hide-modules",
+    "start": "export PORT=7070 NODE_ENV=production && node server.js",
     "line": ""
   },
   "repository": {
