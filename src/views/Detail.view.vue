@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  title: 'MillieBobbyBrown',
+  title: 'SaoirseRonan',
 
   asyncData ({ store }) {
     return store.dispatch('user/getImages')

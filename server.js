@@ -84,10 +84,10 @@ app.get('/api/detail', (req, res) => {
   return res.send({
     msg: 'success',
     data: [
-      'https://img3.doubanio.com/view/photo/l/public/p2502651183.webp',
-      'https://img1.doubanio.com/view/photo/l/public/p2399705738.webp',
-      'https://img3.doubanio.com/view/photo/l/public/p2504091813.webp',
-      'https://img3.doubanio.com/view/photo/l/public/p2504091825.webp'
+      'https://s2.ax1x.com/2019/09/22/uCCWHe.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCC2nO.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCCRBD.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCCcjK.jpg'
     ]
   })
 })
