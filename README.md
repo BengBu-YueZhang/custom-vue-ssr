@@ -9,6 +9,7 @@
 
 ```shell
 
+# http://127.0.0.1:7070/
 # 本地开发
 # 1. 本地开发
 npm run dev
@@ -24,9 +25,9 @@ npm run line
 
 ## 💻预览
 
-![QQ20190818-204910@2x.png](https://i.loli.net/2019/08/18/7Q3khjbH2CfN5ps.png)
+![1.png](https://i.loli.net/2019/09/28/NXlIOwrec3diFK7.png)
 
-![QQ20190818-204925@2x.png](https://i.loli.net/2019/08/18/xPN7BAkpVe96KJy.png)
+![2.png](https://i.loli.net/2019/09/28/N7sWLjEXGborKaU.png)
 
 ## 🧭参考
 
