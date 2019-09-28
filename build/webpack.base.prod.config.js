@@ -6,6 +6,12 @@ const baseConfig = require('./webpack.base.config')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+class ServerMiniCssExtractPlugin extends MiniCssExtractPlugin {
+  getCssChunkObject(mainChunk) {
+    return {};
+  }
+}
+
 module.exports = merge(baseConfig, {
   mode: 'production',
 
@@ -60,7 +66,7 @@ module.exports = merge(baseConfig, {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: ServerMiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader'
@@ -74,7 +80,7 @@ module.exports = merge(baseConfig, {
         test: /\.less$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: ServerMiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader'
@@ -91,7 +97,7 @@ module.exports = merge(baseConfig, {
   },
 
   plugins: [
-    new MiniCssExtractPlugin({
+    new ServerMiniCssExtractPlugin({
       filename: '[contenthash].css'
     }),
     new webpack.HashedModuleIdsPlugin({

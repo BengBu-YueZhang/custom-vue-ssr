@@ -1,9 +1,7 @@
 <template>
   <div class="home">
     <div class="home-images">
-      <img class="home-images-cover1" src="MillieBobbyBrown1.jpg"/>
-      <img class="home-images-cover2" src="MillieBobbyBrown2.jpg"/>
-      <img class="home-images-cover3" src="MillieBobbyBrown3.jpg"/>
+      <img class="home-images-cover1" src="/public/SaoirseRonan1.jpg"/>
     </div>
     <router-link class="home-link" to="/detail">MORE</router-link>
   </div>
@@ -11,7 +9,7 @@
 
 <script>
 export default {
-  title: 'MillieBobbyBrown'
+  title: 'SaoirseRonan'
 }
 </script>
 
@@ -36,17 +34,7 @@ export default {
     margin-bottom: 60px;
 
     &-cover1 {
-      width: 400px;
-      margin: 15px;
-    }
-
-    &-cover2 {
-      width: 320px;
-      margin: 15px;
-    }
-
-    &-cover3 {
-      width: 350px;
+      width: 600px;
       margin: 15px;
     }
   }

@@ -15,7 +15,7 @@ module.exports = {
   },
   production: {
     outputPath: outputPath,
-    publicPath: '',
+    publicPath: '/dist/',
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
     vars: {

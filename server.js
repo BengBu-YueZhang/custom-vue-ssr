@@ -92,10 +92,10 @@ router.get('/api/detail', async (ctx) => {
   ctx.body = {
     msg: 'success',
     data: [
-      'https://i.loli.net/2019/08/18/oQwqrHnGOJbNKLC.png',
-      'https://i.loli.net/2019/08/18/DeI7hV5Mp6rcbK4.png',
-      'https://i.loli.net/2019/08/18/YTuSmfAlytIqgwd.png',
-      'https://i.loli.net/2019/08/18/sQvkjf6TI2mUOp1.png'
+      'https://s2.ax1x.com/2019/09/22/uCCWHe.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCC2nO.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCCRBD.jpg',
+      'https://s2.ax1x.com/2019/09/22/uCCcjK.jpg'
     ]
   }
 })
