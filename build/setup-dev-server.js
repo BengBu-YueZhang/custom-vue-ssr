@@ -5,6 +5,10 @@ const webpack = require('webpack')
 const chokidar = require('chokidar')
 const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
+// https://github.com/shellscape/koa-webpack
+// 替代webpack-hot-middleware
+// 替代webpack-dev-middleware
+const koaWebpack = require('koa-webpack')
 
 const readFile = (fs, file) => {
   try {
@@ -64,7 +68,9 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   })
 
   // hot middleware
-  app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }))
+  app.use(
+    require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 })
+  )
 
   // watch and update server renderer
   const serverCompiler = webpack(serverConfig)
