@@ -44,7 +44,6 @@ module.exports = async function setupDevServer (app, templatePath, cb) {
   clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app]
   clientConfig.output.filename = '[name].js'
   clientConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   )
 
@@ -72,10 +71,7 @@ module.exports = async function setupDevServer (app, templatePath, cb) {
   })
 
   const hotMiddleware = await koaWebpack({
-    compiler: clientCompiler,
-    hotClient: {
-      heartbeat: 5000
-    }
+    compiler: clientCompiler
   })
 
   // hot middleware
