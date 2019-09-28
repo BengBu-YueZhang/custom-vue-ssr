@@ -3,16 +3,17 @@
 本项目是基于[vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)基础上的自定义修改。将webpack升级到了4.x版本。并提供了Koa2版本的服务端版本。
 
 - [express + webpack4](https://github.com/BengBu-YueZhang/custom-vue-ssr)
-- [koa2 + webpack4（开发环境还有一些问题）](https://github.com/BengBu-YueZhang/custom-vue-ssr/tree/koa)
+- [koa2 + webpack4](https://github.com/BengBu-YueZhang/custom-vue-ssr/tree/koa)
 
 ## 🚀开始
 
+> 请在mac电脑上运行
+
 ```shell
 
+# http://127.0.0.1:7070/
 # 本地开发
-# 1. 构建ServerBundle以及ClientBundle
-npm run build:dev
-# 2. 本地开发
+# 1. 本地开发
 npm run dev
 
 # 生产环境使用
@@ -20,15 +21,17 @@ npm run dev
 npm run build:prod
 # 2. 本地预览
 npm run start
-# 3. 线上启动
+# 3. 线上启动(您可以考虑使用pm2)
 npm run line
 ```
 
 ## 💻预览
 
-![QQ20190818-204910@2x.png](https://i.loli.net/2019/08/18/7Q3khjbH2CfN5ps.png)
+> 我的女神，西尔莎罗南
 
-![QQ20190818-204925@2x.png](https://i.loli.net/2019/08/18/xPN7BAkpVe96KJy.png)
+![1.png](https://i.loli.net/2019/09/28/NXlIOwrec3diFK7.png)
+
+![2.png](https://i.loli.net/2019/09/28/N7sWLjEXGborKaU.png)
 
 ## 🧭参考
 
