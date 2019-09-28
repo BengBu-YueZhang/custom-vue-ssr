@@ -7,6 +7,8 @@
 
 ## 🚀开始
 
+> 请在mac电脑上运行
+
 ```shell
 
 # http://127.0.0.1:7070/
@@ -24,6 +26,8 @@ npm run line
 ```
 
 ## 💻预览
+
+> 我的女神，西尔莎罗南
 
 ![1.png](https://i.loli.net/2019/09/28/NXlIOwrec3diFK7.png)
 
