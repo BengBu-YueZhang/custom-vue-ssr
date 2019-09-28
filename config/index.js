@@ -4,7 +4,7 @@ const outputPath = path.resolve(__dirname, '../dist')
 module.exports = {
   development: {
     outputPath: outputPath,
-    publicPath: '',
+    publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
     vars: {
