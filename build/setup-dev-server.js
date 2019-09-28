@@ -16,7 +16,7 @@ const readFile = (fs, file) => {
   } catch (e) {}
 }
 
-module.exports = function setupDevServer (app, templatePath, cb) {
+module.exports = async function setupDevServer (app, templatePath, cb) {
   let bundle
   let template
   let clientManifest
@@ -50,10 +50,14 @@ module.exports = function setupDevServer (app, templatePath, cb) {
 
   // dev middleware
   const clientCompiler = webpack(clientConfig)
-  const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
-    publicPath: clientConfig.output.publicPath,
-    noInfo: true
+  const devMiddleware = await koaWebpack({
+    compiler: clientCompiler,
+    devMiddleware: {
+      publicPath: clientConfig.output.publicPath,
+      noInfo: true
+    }
   })
+
   app.use(devMiddleware)
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
@@ -67,10 +71,15 @@ module.exports = function setupDevServer (app, templatePath, cb) {
     update()
   })
 
+  const hotMiddleware = await koaWebpack({
+    compiler: clientCompiler,
+    hotClient: {
+      heartbeat: 5000
+    }
+  })
+
   // hot middleware
-  app.use(
-    require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 })
-  )
+  app.use(hotMiddleware)
 
   // watch and update server renderer
   const serverCompiler = webpack(serverConfig)
