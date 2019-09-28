@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home-images">
-      <img class="home-images-cover1" src="/public/SaoirseRonan1.jpg"/>
+      <img class="home-images-cover1" src="/SaoirseRonan1.jpg"/>
     </div>
     <router-link class="home-link" to="/detail">MORE</router-link>
   </div>
