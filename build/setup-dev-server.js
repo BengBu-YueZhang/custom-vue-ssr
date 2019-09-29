@@ -16,7 +16,7 @@ const readFile = (fs, file) => {
   } catch (e) {}
 }
 
-module.exports = async function setupDevServer (app, templatePath, cb) {
+module.exports = function setupDevServer (app, templatePath, cb) {
   let bundle
   let template
   let clientManifest
@@ -49,15 +49,30 @@ module.exports = async function setupDevServer (app, templatePath, cb) {
 
   // dev middleware
   const clientCompiler = webpack(clientConfig)
-  const devMiddleware = await koaWebpack({
-    compiler: clientCompiler,
-    devMiddleware: {
-      publicPath: clientConfig.output.publicPath,
-      noInfo: true
+  // const devMiddleware = await koaWebpack({
+  //   compiler: clientCompiler,
+  //   devMiddleware: {
+  //     publicPath: clientConfig.output.publicPath,
+  //     noInfo: true
+  //   }
+  // })
+
+  app.use(() => {
+    let middleware = null;
+    return async (ctx, next) => {
+      if (!middleware) {
+        middleware = await koaWebpack({
+          compiler: clientCompiler,
+          devMiddleware: {
+            publicPath: clientConfig.output.publicPath,
+            noInfo: true
+          }
+        })
+      }
+      return middleware(ctx, next)
     }
   })
-
-  app.use(devMiddleware)
+    
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
     stats.errors.forEach(err => console.error(err))
@@ -70,14 +85,29 @@ module.exports = async function setupDevServer (app, templatePath, cb) {
     update()
   })
 
-  const hotMiddleware = await koaWebpack({
-    compiler: clientCompiler
-  })
+  // const hotMiddleware = await koaWebpack({
+  //   compiler: clientCompiler
+  // })
 
   // hot middleware
-  app.use(hotMiddleware)
+  // app.use(hotMiddleware)
 
-  // watch and update server renderer
+  app.use(() => {
+    let middleware = null;
+    return async (ctx, next) => {
+      if (!middleware) {
+        middleware = await koaWebpack({
+          compiler: clientCompiler,
+          hotClient: {
+            heartbeat: 5000
+          }
+        })
+      }
+      return middleware(ctx, next)
+    }
+  })
+
+  // // watch and update server renderer
   const serverCompiler = webpack(serverConfig)
   const mfs = new MFS()
   serverCompiler.outputFileSystem = mfs
