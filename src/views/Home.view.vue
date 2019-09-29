@@ -21,7 +21,7 @@ export default {
   padding: 20px;
   padding-top: 40px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   background-color: #fff;
