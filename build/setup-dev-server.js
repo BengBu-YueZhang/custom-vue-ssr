@@ -5,10 +5,9 @@ const webpack = require('webpack')
 const chokidar = require('chokidar')
 const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
-// https://github.com/shellscape/koa-webpack
-// 替代webpack-hot-middleware
-// 替代webpack-dev-middleware
-const koaWebpack = require('koa-webpack')
+const webpackDevMiddleware = require('koa-webpack-dev-middleware')
+const webpackHotMiddleware = require('koa-webpack-hot-middleware')
+const convert = require('koa-convert')
 
 const readFile = (fs, file) => {
   try {
@@ -44,35 +43,22 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app]
   clientConfig.output.filename = '[name].js'
   clientConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   )
 
   // dev middleware
   const clientCompiler = webpack(clientConfig)
-  // const devMiddleware = await koaWebpack({
-  //   compiler: clientCompiler,
-  //   devMiddleware: {
-  //     publicPath: clientConfig.output.publicPath,
-  //     noInfo: true
-  //   }
-  // })
-
-  app.use(() => {
-    let middleware = null;
-    return async (ctx, next) => {
-      if (!middleware) {
-        middleware = await koaWebpack({
-          compiler: clientCompiler,
-          devMiddleware: {
-            publicPath: clientConfig.output.publicPath,
-            noInfo: true
-          }
-        })
-      }
-      return middleware(ctx, next)
-    }
+  const devMiddleware = webpackDevMiddleware(clientCompiler, {
+    publicPath: clientConfig.output.publicPath,
+    noInfo: true
   })
-    
+  app.use(
+    convert(
+      devMiddleware
+    )
+  )
+
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
     stats.errors.forEach(err => console.error(err))
@@ -85,29 +71,14 @@ module.exports = function setupDevServer (app, templatePath, cb) {
     update()
   })
 
-  // const hotMiddleware = await koaWebpack({
-  //   compiler: clientCompiler
-  // })
-
   // hot middleware
-  // app.use(hotMiddleware)
+  app.use(
+    convert(
+      webpackHotMiddleware(clientCompiler, { heartbeat: 5000 })
+    )
+  )
 
-  app.use(() => {
-    let middleware = null;
-    return async (ctx, next) => {
-      if (!middleware) {
-        middleware = await koaWebpack({
-          compiler: clientCompiler,
-          hotClient: {
-            heartbeat: 5000
-          }
-        })
-      }
-      return middleware(ctx, next)
-    }
-  })
-
-  // // watch and update server renderer
+  // watch and update server renderer
   const serverCompiler = webpack(serverConfig)
   const mfs = new MFS()
   serverCompiler.outputFileSystem = mfs
